@@ -1,0 +1,141 @@
+
+#include<iostream>
+#include<string.h>
+using namespace std;
+class books
+{
+private:
+char author[100],title[100],publish[100];
+float price;
+float bill;
+static float ta;
+int stock;
+public:
+void endet();
+void display();
+int compare(char[],char[],char[],float,int);
+books();
+};
+float books::ta=0.0;
+int books::compare(char a[100],char t[100],char p[100], float pr,int s)
+{
+if(strcmp(a,author)==0&&strcmp(t,title)==0&&strcmp(p,publish)==0&&pr==price)
+{
+if(stock>=s)
+{
+cout<<"The book you are searching for has been found!"<<endl;
+bill=pr*s;
+ta+=bill;
+stock-=s;
+cout<<"Bill amount= "<<ta<<endl;
+cout<<"Stock position= "<<stock<<endl;
+return 0;
+}
+else
+{
+cout<<"Number of copies you require are not available"<<endl;
+return 0;
+}
+}
+else
+	return 1;
+}
+void books::endet()
+{
+cout<<"Enter the name of the author:"<<endl;
+ws(cin);
+cin.getline(author,100);
+cout<<"Enter the title of the book:"<<endl;
+ws(cin);
+cin.getline(title,100);
+cout<<"Enter the publisher:"<<endl;
+ws(cin);
+cin.getline(publish,100);
+cout<<"Enter the price of the book:"<<endl;
+cin>>price;
+cout<<"Enter the number of copies of the book present in the stock:"<<endl;
+cin>>stock;
+}
+void books::display()
+{
+cout<<"Title\t\tAuthor\t\tPublisher\t\tPrice\t\tStock Position"<<endl;
+cout<<title<<"\t\t"<<author<<"\t\t"<<publish<<"\t\t"<<price<<"\t\t"<<stock<<endl;
+}
+books::books()
+{
+	price=0.0;
+	stock=0;
+bill=0.0;
+}
+int main()
+{
+cout<<"Welcome to the bookshop!"<<endl;
+int num=0,ch,i,flag=0,j;
+char con='y';
+char st[100],sa[100],sp[100];
+float spr;
+int nc;
+char c='y';
+books ob1;
+cout<<"Enter the number of books in your inventory:"<<endl;
+	cin>>num;
+	books ob[num];
+do
+{
+	cout<<"1-Enter details of bookshop\n2-Display inventory\n3-Search for a book"<<endl;
+	cout<<"Enter choice"<<endl;
+	cin>>ch;
+switch(ch)
+{
+case 1:
+for(i=0;i<num;i++)
+ob[i].endet();
+flag=1;
+break;
+case 2:
+if(flag==0)
+ob1.display();
+else
+{
+for(i=0;i<num;i++)
+ob[i].display();
+}
+break;
+case 3:
+if(num==0)
+cout<<"Sorry! You cannot search for a book as there are no books in your inventory"<<endl;
+else
+while(c=='y'||c=='Y')
+{
+cout<<"Enter author:"<<endl;
+ws(cin);
+cin.getline(sa,100);
+cout<<"Enter title:"<<endl;
+cin.getline(st,100);
+cout<<"Enter publisher:"<<endl;
+ws(cin);
+cin.getline(sp,100);
+cout<<"Enter price:"<<endl;
+cin>>spr;
+cout<<"Enter number of copies you wish to purchase:"<<endl;
+cin>>nc;
+for(i=0;i<num;i++)
+{
+j=ob[i].compare(sa,st,sp,spr,nc);
+if(j==0)
+	break;
+else if(j==1&&i==num-1)
+	cout<<"Book not present in inventory"<<endl;
+}
+cout<<"Do you wish to purchase more books? Y or N"<<endl;
+cin>>c;
+}
+break;
+default:
+cout<<"Wrong choice"<<endl;
+}
+cout<<"Do you wish to continue? Y or N"<<endl;
+cin>>con;
+}while(con=='y'||con=='Y');
+return 0;
+}

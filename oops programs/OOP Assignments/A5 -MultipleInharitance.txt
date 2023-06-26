@@ -1,0 +1,99 @@
+
+#include <iostream>
+using namespace std;
+
+class personal
+{
+	string name,address,dob,email,mob;
+public:
+	void accept()
+	{
+	cout<<"Enter your name\n";
+	getline(cin,name);
+
+	cout<<"Enter your address\n";
+	getline(cin,address);
+
+	cout<<"Enter your date of birth (Format - > 11/10/1988)\n";
+	getline(cin,dob);
+
+	cout<<"Enter your E-mail\n";
+	getline(cin,email);
+
+	cout<<"Enter your mobile number\n";
+	getline(cin,mob);
+	}
+
+	void display()
+	{
+		cout<<"Name          : "<<name<<endl;
+		cout<<"Address       : "<<address<<endl;
+		cout<<"DOB           : "<<dob<<endl;
+		cout<<"E-mail        : "<<email<<endl;
+		cout<<"Mobile number : "<<mob<<endl;
+	}
+};
+
+class professional
+{
+	string emp_id,sal,xp,dept,doj;
+public:
+	void accept1()
+	{
+		cout<<"Enter your Employee ID\n";
+		getline(cin,emp_id);
+
+		cout<<"Enter your salary\n";
+		getline(cin,sal);
+
+		cout<<"Enter your date of joining (Format - > 1/1/2011)\n";
+		getline(cin,doj);
+
+		cout<<"Enter your department\n";
+		getline(cin,dept);
+
+		cout<<"Enter your experience\n";
+		getline(cin,xp);
+	}
+
+	void display1()
+	{
+		cout<<"Employee ID   : "<<emp_id<<endl;
+		cout<<"Salary        : "<<sal<<endl;
+		cout<<"DOJ           : "<<doj<<endl;
+		cout<<"Department    : "<<dept<<endl;
+		cout<<"Experience    : "<<xp<<endl;
+	}
+};
+
+class academic: public personal , public professional
+{
+	int ten,twel;
+public:
+	void accept2()
+	{
+		cout<<"Enter your 10th grade marks (Total out of 800)\n";
+		cin>>ten;
+		cout<<"Enter your 12th grade marks (Total out of 800)\n";
+		cin>>twel;
+	}
+
+	void display2()
+	{
+		cout<<"10th marks    : "<<ten<<endl;
+		cout<<"12th marks    : "<<twel<<endl;
+	}
+};
+
+int main()
+{
+	academic a1;
+	a1.accept();
+	a1.accept1();
+	a1.accept2();
+	cout<<"The biodata has been created\n\n";
+	a1.display();
+	a1.display1();
+	a1.display2();
+	return 0;
+}

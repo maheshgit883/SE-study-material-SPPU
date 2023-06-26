@@ -1,0 +1,135 @@
+/*
+ * stl.cpp
+ *
+ *  Created on: Aug 12, 2016
+ *      Author: student
+ */
+#include<iostream>
+#include<list>
+using namespace std;
+class stlist
+{
+	list<int>mylist,mylist2;
+	list<int>::iterator it;
+public:
+	void checkempty();
+	void insertele();
+	void makelist();
+	void mergerlist();
+	void reverselist();
+	void sortlist();
+	void uniquelist();
+	void display();
+};
+void stlist::checkempty()
+{
+	if(mylist.empty())
+		cout<<"List is empty\n";
+	else
+		cout<<"List not empty"<<endl;
+}
+void stlist::makelist()
+{
+	int count;
+	int a;
+	cout<<"Enter the number of elements in your list"<<endl;
+	cin>>count;
+	cout<<"Enter the elements:"<<endl;
+	for(int i=0;i<count;i++)
+	{
+		cin>>a;
+		mylist.push_back(a);
+	}
+}
+void stlist::insertele()
+{
+	int pos,num;
+	cout<<"Enter the position at which you want to enter element:"<<endl;
+	cin>>pos;
+	cout<<"Enter the element you want to enter:"<<endl;
+	cin>>num;
+	it=mylist.begin();
+	for(int i=0;i<pos;i++)
+		++it;
+	mylist.insert(it,num);
+}
+void stlist::display()
+{
+	cout<<"List:"<<endl;
+	for(it=mylist.begin();it!=mylist.end();it++)
+		cout<<*it<<endl;
+}
+void stlist::sortlist()
+{
+	cout<<"Sorted list:"<<endl;
+	mylist.sort();
+}
+void stlist::reverselist()
+{
+	cout<<"Reversed list:"<<endl;
+	mylist.reverse();
+}
+void stlist::uniquelist()
+{
+	mylist.unique();
+}
+void stlist::mergerlist()
+{
+	int count;
+		int a;
+		cout<<"Enter the number of elements in your second list"<<endl;
+		cin>>count;
+		cout<<"Enter the elements:"<<endl;
+		for(int i=0;i<count;i++)
+		{
+			cin>>a;
+			mylist2.push_back(a);
+		}
+		mylist.merge(mylist2);
+}
+int main()
+{
+	stlist obj;
+	int choice;
+	char c='y';
+	do
+	{
+	cout<<"1. Enter elements of list\n2. Check if list is empty\n3. Insert element in list\n4. Sort list\n5. Print list in reverse order\n6. Delete repeated elements in list\n7. Merge 2 lists\nEnter choice:"<<endl;
+	cin>>choice;
+	switch(choice)
+	{
+	case 1:
+		obj.makelist();
+		break;
+	case 2:
+		obj.checkempty();
+		break;
+	case 3:
+		obj.insertele();
+		obj.display();
+		break;
+	case 4:
+		obj.sortlist();
+		obj.display();
+		break;
+	case 5:
+		obj.reverselist();
+		obj.display();
+		break;
+	case 6:
+		obj.uniquelist();
+		obj.display();
+		break;
+	case 7:
+		obj.mergerlist();
+		obj.display();
+		break;
+	default:
+		cout<<"Wrong choice"<<endl;
+	}
+	cout<<"Do you wish to continue? Y or N\n";
+	cin>>c;
+	}while(c=='y'||c=='Y');
+	return 0;
+}
+
