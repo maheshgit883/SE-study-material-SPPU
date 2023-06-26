@@ -1,0 +1,21 @@
+section .data
+	array db 11h, 55h, 33h, 22h,44h
+	msg1 db 10,13,"Largest no in an array is:"
+	len1 equ $-msg1
+
+
+section .bss
+	cnt resb 1
+section .text
+	global _start
+	_start:
+		mov byte[counter],5
+		mov rsi,array
+		mov al,0
+LP: cmp al,[rsi]
+jg skip
+xchg al ,[rsi]
+skip: inc rsi
+dec byte[cnt]
+jnz lp
+;display al

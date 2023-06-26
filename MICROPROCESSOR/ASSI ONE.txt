@@ -1,0 +1,94 @@
+
+32 Bit Code
+%macro scall 4                              ;macro declaration with 4 parameters
+mov eax,%1                                  ;1st parameter has been moved to eax
+mov ebx,%2                                  ;2nd parameter has been moved to ebx
+mov ecx,%3                                  ;3rd parameter has been moved to ecx
+mov edx,%4                                  ;4th parameter has been moved to edx
+int 80h                                     ;Call the Kernel
+%endmacro                                   ;end of macro
+
+section .data                                                   ;.data begins here
+	msg1 db 10d,13d,"Enter 10 Hexadecimal Numbers: "        ;variable initialised with string  
+	l1 equ $-msg1                                           ;l1 stores length of string msg1
+	msg2 db 10d,13d,"Entered Numbers are: "                 ;variable initialised with string
+	l2 equ $-msg2                                           ;l2 stores length of string msg2
+	
+section .bss                                ;.bss begins here
+	num resd 10                         ;array with 10 elements of double word type
+
+section .text                               ;.text begins here
+        global _start                       ;moving to _start label
+        _start:                             ;_start label
+	        mov esi,num                 ;esi points to base address of num
+	        mov edi,10                  ;stores the count of numbers                      
+	        scall 4,1,msg1,l1           ;macro call to display msg1
+
+        up1:	scall 3,0,esi,9             ;macro call to take input at esi
+	        add esi,9                   ;to make esi point to next address
+	        dec edi                     ;decrement edi
+	        jnz up1                     ;jump to up1 if not zero
+
+	        mov esi,num                 ;esi points to base address of num
+	        mov edi,10                  ;stores the count of numbers  
+	        scall 4,1,msg2,l2           ;macro call to display msg2
+
+        up2:	scall 4,1,esi,9             ;macro call to display esi address contents
+	        add esi,9                   ;to make esi point to next address
+	        dec edi                     ;decrement edi
+	        jnz up2                     ;jump to up2 if not zero
+
+                mov eax,1                   ;sys_exit 
+                mov ebx,0                   ;Sucessful Termination
+                int 80h                     ;Call the Kernel
+
+
+
+
+
+
+
+64 Bit Code
+%macro scall 4                              ;macro declaration with 4 parameters
+mov rax,%1                                  ;1st parameter has been moved to rax
+mov rdi,%2                                  ;2nd parameter has been moved to rdi
+mov rsi,%3                                  ;3rd parameter has been moved to rsi
+mov rdx,%4                                  ;4th parameter has been moved to rdx
+syscall                                     ;Call the Kernal
+%endmacro                                   ;end of macro
+
+section .data                               ;.data begins here
+        m1 db "Enter the ten 64 bit numbers:" ,10d,13d    ;m1 variable initialised with string
+        l1 equ $-m1                         ;l1 stores length of string m1
+        m2 db "The ten 64 bit numbers are:" ,10d,13d    ;m2 variable initialised with string
+        l2 equ $-m2                         ;l2 stores length of string m2
+
+section .bss                                ;.bss begins here
+        num resq 10                         ;array of 10 elements of type quad word
+        cnt resb 1                          ;variable of type byte
+        
+section .text                               ;.text begins here
+        global _start                       ;moving to _start label
+        _start:                             ;_start label
+                mov rbx,num                 ;rbx points to base address of num
+                
+                mov byte[cnt],10            ;type casting and storing 10 in cnt
+                scall 1,1,m1,l1             ;macro call to display m1
+        up1:    scall 0,0,rbx,48            ;macro call to input at rbx
+                add rbx,48                  ;make rbx point at next address
+                dec byte[cnt]               ;decrement cnt
+                jnz up1                     ;jump to up1 if not zero
+                
+                mov rbx,num                 ;rbx points to base address of num
+                mov byte[cnt],10            ;type casting and storing 10 in cnt
+                scall 1,1,m2,l2             ;macro call to display m2
+                
+        up2:    scall 1,1,rbx,48            ;macro call to display rbx address contents
+                add rbx,48                  ;make rbx point at next address
+                dec byte[cnt]               ;decrement cnt
+                jnz up2                     ;jump to up2 if not zero
+                
+                mov rax,60                  ;sys_exit function
+                mov rbx,0                   ;Sucessful Termination
+                syscall                     ;Call the Kernel
+
